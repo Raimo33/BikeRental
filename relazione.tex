@@ -1,0 +1,127 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[main=italian,provide=*]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\setlength{\parindent}{0pt}
+
+\title{Progettazione Database - Noleggio Bici}
+\author{Claudio Raimondi}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Richiesta}
+
+Un negozio di noleggio biciclette richiede una base di dati per la gestione operativa della propria flotta, dei clienti e delle transazioni di noleggio effettuate.
+
+\vspace{1em}
+
+Ogni bicicletta è identificata univocamente da un codice telaio ed è caratterizzata da specifiche proprietà tecniche: la taglia(bambino, media o grande), il genere(uomo o donna) e la tipologia(mountain bike, city bike o elettrica). Per ciascun mezzo, il sistema deve monitorare costantemente lo stato di disponibilità(libera, noleggiata o in manutenzione). Ogni bicicletta è inoltre equipaggiata con un dispositivo GPS(identificato dal suo numero di serie) e dispone di una nota danni preesistenti per evitare contestazioni alla riconsegna.
+
+\vspace{1em}
+
+Le biciclette elettriche richiedono una gestione specifica: per esse è necessario registrare lo stato di carica della batteria sia al momento della consegna, sia al momento della restituzione, per garantirne l'efficienza d'uso.
+
+\vspace{1em}
+
+Il negozio interagisce con i clienti, i quali sono identificati dal proprio codice fiscale e dei quali si conservano le generalità come nome, cognome e un recapito telefonico. Il cliente può sottoscrivere uno o più noleggi nel tempo. Ogni noleggio associa formalmente una bicicletta a un cliente per un determinato periodo di utilizzo.
+
+\vspace{1em}
+
+In fase di stipula del contratto, viene applicata una tariffa che dipende dalla durata del noleggio e dal tipo di bici. La durata del noleggio segue delle formule standard: giornaliera, settimanale o mensile. Per ogni operazione conclusa, il sistema deve tenere traccia dei dettagli del pagamento, memorizzando il codice ricevuta emesso e la modalità di pagamento(contanti, carta o bitcoin).
+
+\section{Progettazione Concettuale}
+
+\subsection{Analisi Richiesta}
+
+Di seguito si analizza la richiesta evidenziando i termini chiave.
+
+\vspace{1em}
+
+Ogni \underline{bicicletta} è identificata univocamente da un \underline{codice telaio} ed è caratterizzata da specifiche proprietà tecniche: la \underline{taglia} (bambino, media o grande), il \underline{genere} (uomo o donna) e la \underline{tipologia} (mountain bike, city bike o elettrica). Per ciascun mezzo, il sistema deve monitorare costantemente lo \underline{stato di disponibilità} (libera, noleggiata o in manutenzione). Ogni \underline{bicicletta} è inoltre equipaggiata con un dispositivo \underline{GPS} (identificato dal suo \underline{numero di serie}) e dispone di una \underline{nota danni preesistenti} per evitare contestazioni alla riconsegna.
+
+\vspace{1em}
+
+Le \underline{biciclette elettriche} richiedono una gestione specifica: per esse è necessario registrare lo \underline{stato di carica della batteria} sia al momento della \underline{consegna}, sia al momento della \underline{restituzione}, per garantirne l'efficienza d'uso.
+
+\vspace{1em}
+
+Il negozio interagisce con i \underline{clienti}, i quali sono identificati dal proprio \underline{codice fiscale} e dei quali si conservano le generalità come \underline{nome}, \underline{cognome} e un \underline{recapito telefonico}. Il \underline{cliente} può sottoscrivere uno o più \underline{noleggi} nel tempo. Ogni \underline{noleggio} associa formalmente una \underline{bicicletta} a un \underline{cliente} per un determinato \underline{periodo di utilizzo}.
+
+\vspace{1em}
+
+In fase di stipula del contratto, viene applicata una \underline{tariffa} che dipende dalla \underline{durata del noleggio} e dal \underline{tipo di bici}. La durata del noleggio segue delle \underline{formule standard}: giornaliera, settimanale o mensile. Per ogni operazione conclusa, il sistema deve tenere traccia dei dettagli del \underline{pagamento}, memorizzando il \underline{codice ricevuta} emesso e la \underline{modalità di pagamento} (contanti, carta o bitcoin).
+
+\subsection{Glossario dei Termini}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{6cm}|l|}
+\hline
+\textbf{Nome} & \textbf{Descrizione} & \textbf{Collegamenti} \\ \hline
+Bicicletta & Rappresenta l'unità fisica della flotta, identificata dal codice telaio e dotata di GPS. & Cliente, Noleggio \\ \hline
+Bicicletta Elettrica & Specializzazione della bicicletta che richiede il monitoraggio della carica batteria. & Bicicletta, Noleggio \\ \hline
+Cliente & Soggetto che richiede il servizio, identificato univocamente dal codice fiscale. & Noleggio \\ \hline
+Noleggio & Operazione che lega un cliente a una bicicletta per un determinato periodo di tempo. & Cliente, Bicicletta, Pagamento, Tariffa \\ \hline
+Tariffa & Definizione del costo basata sulla durata (giornaliera, settimanale, mensile) e sulla tipologia di bicicletta. & Noleggio \\ \hline
+Pagamento & Transazione economica associata a un noleggio, identificata dal codice ricevuta. & Noleggio \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Costruzione Schema Concettuale}
+
+Di seguito si mostrano le entità sviluppate partendo dai termini chiave individuati nella richiesta:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/entities.pdf}
+\end{figure}
+
+E le relazioni tra di esse:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/entity-relationship.pdf}
+\end{figure}
+
+\section{Progettazione Logica}
+\subsection{Analisi delle Prestazioni dello Schema Concettuale}
+\subsubsection{Tabella dei volumi}
+\subsubsection{Insieme delle operazioni}
+\subsubsection{Tabelle degli accessi}
+\subsection{Ristrutturazione Modello E-R}
+\subsubsection{Eliminazione delle ridondanze}
+
+% 1) la tariffa deve dipendere sia dal tipo di bici, che dalla durata del contratto. A primo impatto verrebbe naturale creare una entita "Tariffa" o "Tariffario" come segue:
+
+% ma questo crea evidentemente ridondanza, infatti non scala! per ogni combinazione di tipo di bici e durata del contratto, si avrebbe una tupla in piu. con 4 bici e 3 durate, si avrebbero gia 12 tuple. con 10 tipi di bici e 10 durate, 100 tuple. e cosi via. aumenta con complessita fattoriale.
+
+% la tariffa puo quindi essere rappresentata da una funzione che prende in input tipo di bici e durata del contratto. o piu precisamente, il tipo di bici rappresenta un moltiplicatore (ad esempio 1x per city bike, 1.5x per mountain bike, 2x per elettrica) e la durata del contratto rappresenta la base in termini di prezzo giornaliero (ad esempio 10 euro se tariffa giornaliera, 8 euro se settimanale, 5 euro se mensile). in questo modo si puo calcolare la tariffa finale come:
+% tariffa = base(durata) * moltiplicatore(tipo di bici).
+
+
+\subsubsection{Eliminazione delle generalizzazioni}
+\subsubsection{Rimozione degli attributi composti}
+\subsubsection{Scelta degli identificatori principali}
+\subsubsection{Risultato finale della ristrutturazione}
+\subsection{Traduzione verso il Modello Relazionale}
+
+\section{Progettazione Fisica}
+\subsection{Creazione e Popolamento Tabelle}
+\subsection{Triggers}
+\subsection{Interrogazioni}
+\subsection{Procedure e Funzioni}
+\subsection{Viste}
+
+\end{document}
