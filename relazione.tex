@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{geometry}
+\usepackage{float}
 \geometry{margin=2.5cm}
 
 \setlength{\parindent}{0pt}
@@ -31,7 +32,7 @@ Ogni bicicletta è identificata univocamente da un codice telaio ed è caratteri
 
 \vspace{1em}
 
-Le biciclette elettriche richiedono una gestione specifica: per esse è necessario registrare lo stato di carica della batteria sia al momento della consegna, sia al momento della restituzione, per garantirne l'efficienza d'uso.
+Le biciclette elettriche richiedono una gestione specifica: per esse è necessario registrare lo stato di carica della batteria sia al momento della consegna, sia al momento della restituzione, per far eventualmente pagare la differenza di carica al cliente.
 
 \vspace{1em}
 
@@ -53,7 +54,7 @@ Ogni \underline{bicicletta} è identificata univocamente da un \underline{codice
 
 \vspace{1em}
 
-Le \underline{biciclette elettriche} richiedono una gestione specifica: per esse è necessario registrare lo \underline{stato di carica della batteria} sia al momento della \underline{consegna}, sia al momento della \underline{restituzione}, per garantirne l'efficienza d'uso.
+Le \underline{biciclette elettriche} richiedono una gestione specifica: per esse è necessario registrare lo \underline{stato di carica della batteria} sia al momento della \underline{consegna}, sia al momento della \underline{restituzione}, per far eventualmente pagare la differenza di carica al cliente.
 
 \vspace{1em}
 
@@ -70,46 +71,85 @@ In fase di stipula del contratto, viene applicata una \underline{tariffa} che di
 \begin{tabular}{|l|p{6cm}|l|}
 \hline
 \textbf{Nome} & \textbf{Descrizione} & \textbf{Collegamenti} \\ \hline
-Bicicletta & Rappresenta l'unità fisica della flotta, identificata dal codice telaio e dotata di GPS. & Cliente, Noleggio \\ \hline
-Bicicletta Elettrica & Specializzazione della bicicletta che richiede il monitoraggio della carica batteria. & Bicicletta, Noleggio \\ \hline
-Cliente & Soggetto che richiede il servizio, identificato univocamente dal codice fiscale. & Noleggio \\ \hline
+Bicicletta & unità fisica della flotta, identificata dal codice telaio e dotata di GPS. & Cliente, Noleggio \\ \hline
+Bicicletta Elettrica & Specializzazione della bicicletta che richiede il monitoraggio della batteria. & Bicicletta, Noleggio \\ \hline
+Cliente & Soggetto che richiede il servizio, identificato dal codice fiscale. & Noleggio \\ \hline
 Noleggio & Operazione che lega un cliente a una bicicletta per un determinato periodo di tempo. & Cliente, Bicicletta, Pagamento, Tariffa \\ \hline
-Tariffa & Definizione del costo basata sulla durata (giornaliera, settimanale, mensile) e sulla tipologia di bicicletta. & Noleggio \\ \hline
+Tariffa & Costo dipendente da durata e tipologia di bicicletta. & Noleggio \\ \hline
 Pagamento & Transazione economica associata a un noleggio, identificata dal codice ricevuta. & Noleggio \\ \hline
 \end{tabular}
 \end{table}
 
 \subsection{Costruzione Schema Concettuale}
 
-Di seguito si mostrano le entità sviluppate partendo dai termini chiave individuati nella richiesta:
+Di seguito si mostra un primo schema E-R:
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{assets/entities.pdf}
-\end{figure}
-
-E le relazioni tra di esse:
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{assets/entity-relationship.pdf}
+    \includegraphics[width=1\textwidth]{assets/schema1.pdf}
+    \label{fig:schema1}
 \end{figure}
 
 \section{Progettazione Logica}
 \subsection{Analisi delle Prestazioni dello Schema Concettuale}
+
+
 \subsubsection{Tabella dei volumi}
 \subsubsection{Insieme delle operazioni}
 \subsubsection{Tabelle degli accessi}
 \subsection{Ristrutturazione Modello E-R}
+
 \subsubsection{Eliminazione delle ridondanze}
 
-% 1) la tariffa deve dipendere sia dal tipo di bici, che dalla durata del contratto. A primo impatto verrebbe naturale creare una entita "Tariffa" o "Tariffario" come segue:
+\bigskip
 
-% ma questo crea evidentemente ridondanza, infatti non scala! per ogni combinazione di tipo di bici e durata del contratto, si avrebbe una tupla in piu. con 4 bici e 3 durate, si avrebbero gia 12 tuple. con 10 tipi di bici e 10 durate, 100 tuple. e cosi via. aumenta con complessita fattoriale.
+\noindent\textbf{Duplicazione degli attributi di costo}
 
-% la tariffa puo quindi essere rappresentata da una funzione che prende in input tipo di bici e durata del contratto. o piu precisamente, il tipo di bici rappresenta un moltiplicatore (ad esempio 1x per city bike, 1.5x per mountain bike, 2x per elettrica) e la durata del contratto rappresenta la base in termini di prezzo giornaliero (ad esempio 10 euro se tariffa giornaliera, 8 euro se settimanale, 5 euro se mensile). in questo modo si puo calcolare la tariffa finale come:
-% tariffa = base(durata) * moltiplicatore(tipo di bici).
+\medskip
+Si osserva la presenza di due campi, \texttt{costo} e \texttt{importo}, sia nell'entità \textbf{Tariffa} che nell'entità \textbf{Pagamento}.  
+Sebbene a primo impatto possa sembrare una \emph{ridondanza}, questa scelta risponde ad un'esigenza progettuale ben precisa.
 
+\medskip
+\begin{itemize}
+    \item la tabella \textbf{Tariffa} rappresenta un \emph{listino prezzi} soggetto a possibili variazioni nel tempo
+    \item l'attributo \texttt{importo} in \textbf{Pagamento} indica il prezzo \emph{effettivamente concordato} per uno specifico noleggio
+\end{itemize}
+
+\medskip
+Questa distinzione consente di mantenere l'\textbf{accuratezza temporale}: anche se il listino viene aggiornato, i pagamenti storici conservano l'importo originariamente applicato.
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent\textbf{Gestione delle biciclette elettriche}
+
+\medskip
+Nel primo schema emerge una criticità legata alla gestione delle bici elettriche. Come richiesto dalla specifica, per questa tipologia di biciclette è necessario tracciare lo \textbf{stato di carica della batteria} sia all'inizio che alla fine di ogni noleggio.
+
+\medskip
+La soluzione attualmente adottata comporta la presenza di \emph{valori nulli} per tutte le biciclette non elettriche, introducendo una ridondanza non necessaria.
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent\textbf{Scalabilità del tariffario}
+
+\medskip
+Un'ulteriore fonte di ridondanza riguarda il \textbf{tariffario}, che richiede una tupla per ogni combinazione di \texttt{durata} e \texttt{tipologia\_bici}, con complessità spaziale $O(m \times n)$. Sebbene la tabella \textbf{Tariffa} creasca raramente, l'approccio risulta poco scalabile.
+
+\bigskip
+\hrule
+\bigskip
+
+Di seguito si mostra lo schema E-R finale:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/schema2.pdf}
+    \label{fig:schema2}
+\end{figure}
 
 \subsubsection{Eliminazione delle generalizzazioni}
 \subsubsection{Rimozione degli attributi composti}
@@ -122,6 +162,9 @@ E le relazioni tra di esse:
 \subsection{Triggers}
 \subsection{Interrogazioni}
 \subsection{Procedure e Funzioni}
+
+% aggiornamento tariffa con base * moltiplicatore
+
 \subsection{Viste}
 
 \end{document}
