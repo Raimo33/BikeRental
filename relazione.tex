@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 \usepackage{float}
+\usepackage{colortbl}
+\usepackage{xcolor}
 \geometry{margin=2.5cm}
 
 \setlength{\parindent}{0pt}
@@ -26,21 +28,21 @@
 
 Un negozio di noleggio biciclette richiede una base di dati per la gestione operativa della propria flotta, dei clienti e delle transazioni di noleggio effettuate.
 
-\vspace{1em}
+\medskip
 
-Ogni bicicletta è identificata univocamente da un codice telaio ed è caratterizzata da specifiche proprietà tecniche: la taglia(bambino, media o grande), il genere(uomo o donna) e la tipologia(mountain bike, city bike o elettrica). Per ciascun mezzo, il sistema deve monitorare costantemente lo stato di disponibilità(libera, noleggiata o in manutenzione). Ogni bicicletta è inoltre equipaggiata con un dispositivo GPS(identificato dal suo numero di serie) e dispone di una nota danni preesistenti per evitare contestazioni alla riconsegna.
+Ogni bicicletta è identificata univocamente da un codice telaio ed è caratterizzata da specifiche proprietà tecniche: la taglia (bambino, media o grande), il genere (uomo o donna) e la tipologia (mountain bike, city bike o elettrica). Per ciascun mezzo, il sistema deve monitorare costantemente lo stato di disponibilità (libera, noleggiata o in manutenzione). Ogni bicicletta è inoltre equipaggiata con un dispositivo GPS (identificato dal suo numero di serie) e dispone di una nota danni preesistenti per evitare contestazioni alla riconsegna.
 
-\vspace{1em}
+\medskip
 
 Le biciclette elettriche richiedono una gestione specifica: per esse è necessario registrare lo stato di carica della batteria sia al momento della consegna, sia al momento della restituzione, per far eventualmente pagare la differenza di carica al cliente.
 
-\vspace{1em}
+\medskip
 
 Il negozio interagisce con i clienti, i quali sono identificati dal proprio codice fiscale e dei quali si conservano le generalità come nome, cognome e un recapito telefonico. Il cliente può sottoscrivere uno o più noleggi nel tempo. Ogni noleggio associa formalmente una bicicletta a un cliente per un determinato periodo di utilizzo.
 
-\vspace{1em}
+\medskip
 
-In fase di stipula del contratto, viene applicata una tariffa che dipende dalla durata del noleggio e dal tipo di bici. La durata del noleggio segue delle formule standard: giornaliera, settimanale o mensile. Per ogni operazione conclusa, il sistema deve tenere traccia dei dettagli del pagamento, memorizzando il codice ricevuta emesso e la modalità di pagamento(contanti, carta o bitcoin).
+In fase di stipula del contratto, viene applicata una tariffa che dipende dalla durata del noleggio e dal tipo di bici. La durata del noleggio segue delle formule standard: giornaliera, settimanale o mensile. Per ogni operazione conclusa, il sistema deve tenere traccia dei dettagli del pagamento, memorizzando il codice ricevuta emesso e la modalità di pagamento (contanti, carta o bitcoin).
 
 \section{Progettazione Concettuale}
 
@@ -48,19 +50,19 @@ In fase di stipula del contratto, viene applicata una tariffa che dipende dalla 
 
 Di seguito si analizza la richiesta evidenziando i termini chiave.
 
-\vspace{1em}
+\medskip
 
 Ogni \underline{bicicletta} è identificata univocamente da un \underline{codice telaio} ed è caratterizzata da specifiche proprietà tecniche: la \underline{taglia} (bambino, media o grande), il \underline{genere} (uomo o donna) e la \underline{tipologia} (mountain bike, city bike o elettrica). Per ciascun mezzo, il sistema deve monitorare costantemente lo \underline{stato di disponibilità} (libera, noleggiata o in manutenzione). Ogni \underline{bicicletta} è inoltre equipaggiata con un dispositivo \underline{GPS} (identificato dal suo \underline{numero di serie}) e dispone di una \underline{nota danni preesistenti} per evitare contestazioni alla riconsegna.
 
-\vspace{1em}
+\medskip
 
 Le \underline{biciclette elettriche} richiedono una gestione specifica: per esse è necessario registrare lo \underline{stato di carica della batteria} sia al momento della \underline{consegna}, sia al momento della \underline{restituzione}, per far eventualmente pagare la differenza di carica al cliente.
 
-\vspace{1em}
+\medskip
 
 Il negozio interagisce con i \underline{clienti}, i quali sono identificati dal proprio \underline{codice fiscale} e dei quali si conservano le generalità come \underline{nome}, \underline{cognome} e un \underline{recapito telefonico}. Il \underline{cliente} può sottoscrivere uno o più \underline{noleggi} nel tempo. Ogni \underline{noleggio} associa formalmente una \underline{bicicletta} a un \underline{cliente} per un determinato \underline{periodo di utilizzo}.
 
-\vspace{1em}
+\medskip
 
 In fase di stipula del contratto, viene applicata una \underline{tariffa} che dipende dalla \underline{durata del noleggio} e dal \underline{tipo di bici}. La durata del noleggio segue delle \underline{formule standard}: giornaliera, settimanale o mensile. Per ogni operazione conclusa, il sistema deve tenere traccia dei dettagli del \underline{pagamento}, memorizzando il \underline{codice ricevuta} emesso e la \underline{modalità di pagamento} (contanti, carta o bitcoin).
 
@@ -71,10 +73,10 @@ In fase di stipula del contratto, viene applicata una \underline{tariffa} che di
 \begin{tabular}{|l|p{6cm}|l|}
 \hline
 \textbf{Nome} & \textbf{Descrizione} & \textbf{Collegamenti} \\ \hline
-Bicicletta & unità fisica della flotta, identificata dal codice telaio e dotata di GPS. & Cliente, Noleggio \\ \hline
-Bicicletta Elettrica & Specializzazione della bicicletta che richiede il monitoraggio della batteria. & Bicicletta, Noleggio \\ \hline
+Bici & unità fisica della flotta, identificata dal codice telaio e dotata di GPS. & Cliente, Noleggio \\ \hline
+Bici Elettrica & Specializzazione della bicicletta che richiede il monitoraggio della batteria. & Bici, Noleggio \\ \hline
 Cliente & Soggetto che richiede il servizio, identificato dal codice fiscale. & Noleggio \\ \hline
-Noleggio & Operazione che lega un cliente a una bicicletta per un determinato periodo di tempo. & Cliente, Bicicletta, Pagamento, Tariffa \\ \hline
+Noleggio & Operazione che lega un cliente a una bicicletta per un determinato periodo di tempo. & Cliente, Bici, Pagamento, Tariffa \\ \hline
 Tariffa & Costo dipendente da durata e tipologia di bicicletta. & Noleggio \\ \hline
 Pagamento & Transazione economica associata a un noleggio, identificata dal codice ricevuta. & Noleggio \\ \hline
 \end{tabular}
@@ -87,16 +89,96 @@ Di seguito si mostra un primo schema E-R:
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{assets/schema1.pdf}
-    \label{fig:schema1}
 \end{figure}
 
 \section{Progettazione Logica}
 \subsection{Analisi delle Prestazioni dello Schema Concettuale}
 
-
 \subsubsection{Tabella dei volumi}
+
+Si riporta di seguito una tabella dei volumi indicativa, prendendo come riferimento 1000 noleggi.
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|r|}
+\hline
+\textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\ \hline
+Cliente         & E & 600 \\ \hline
+Noleggio        & E & 1.000 \\ \hline
+Pagamento       & E & 1.000 \\ \hline
+Bici            & E & 100 \\ \hline
+Tariffa         & E & 9 \\ \hline
+sottoscrive     & R & 1.000 \\ \hline
+utilizza        & R & 1.000 \\ \hline
+applica         & R & 1.000 \\ \hline
+genera          & R & 1.000 \\ \hline
+\end{tabular}
+\end{table}
+
 \subsubsection{Insieme delle operazioni}
+
+Si elencano di seguito le principali operazioni che il sistema dovrà supportare:
+
+\begin{enumerate}
+    \item registrazione di un \textbf{nuovo cliente}
+    \item aggiunta di una \textbf{nuova bicicletta} alla flotta
+    \item avvio di un \textbf{nuovo noleggio}
+    \item conclusione di un noleggio e registrazione del \textbf{pagamento}
+\end{enumerate}
+
+\pagebreak
 \subsubsection{Tabelle degli accessi}
+
+Per ogni operazione, si stima il numero di accessi alle entità e relazioni coinvolte.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Reg. Cliente} & \textbf{Agg. Bici} & \textbf{Avvio Nol.[1]} & \textbf{Conc. Nol.[2]} \\ \hline
+Cliente                     & 0 & 0 & 0 & 0 \\ \hline
+Bici                        & 0 & 0 & 1 & 0 \\ \hline
+Noleggio                    & 0 & 0 & 0 & 1 \\ \hline
+Pagamento                   & 0 & 0 & 0 & 0 \\ \hline
+Tariffa                     & 0 & 0 & 1 & 0 \\ \hline
+sottoscrive                 & 0 & 0 & 0 & 0 \\ \hline
+utilizza                    & 0 & 0 & 0 & 0 \\ \hline
+applica                     & 0 & 0 & 0 & 0 \\ \hline
+genera                      & 0 & 0 & 0 & 0 \\ \hline
+\rowcolor{yellow!20} Tot L  & 0 & 0 & 2 & 1 \\ \hline
+\end{tabular}
+\caption{Tabella degli Accessi in Lettura}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Reg. Cliente} & \textbf{Agg. Bici} & \textbf{Avvio Nol.[1]} & \textbf{Conc. Nol.[2]} \\ \hline
+Cliente                     & 1 & 0 & 0 & 0 \\ \hline
+Bici                        & 0 & 1 & 0 & 0 \\ \hline
+Noleggio                    & 0 & 0 & 1 & 1 \\ \hline
+Pagamento                   & 0 & 0 & 0 & 1 \\ \hline
+Tariffa                     & 0 & 0 & 0 & 0 \\ \hline
+sottoscrive                 & 0 & 0 & 1 & 0 \\ \hline
+utilizza                    & 0 & 0 & 1 & 0 \\ \hline
+applica                     & 0 & 0 & 1 & 0 \\ \hline
+genera                      & 0 & 0 & 0 & 1 \\ \hline
+\rowcolor{yellow!20} Tot S  & 1 & 1 & 4 & 3 \\ \hline
+\end{tabular}
+\caption{Tabella degli Accessi in Scrittura}
+\end{table}
+
+\smallskip
+\noindent\textit{[1] Nota: si ipotizza il noleggio di una bicicletta non elettrica}
+
+\noindent\textit{[2] Nota: si ipotizza che la nota di stato della bicicletta non venga cambiato}
+
+
+\pagebreak
 \subsection{Ristrutturazione Modello E-R}
 
 \subsubsection{Eliminazione delle ridondanze}
@@ -106,14 +188,11 @@ Di seguito si mostra un primo schema E-R:
 \noindent\textbf{Duplicazione degli attributi di costo}
 
 \medskip
-Si osserva la presenza di due campi, \texttt{costo} e \texttt{importo}, sia nell'entità \textbf{Tariffa} che nell'entità \textbf{Pagamento}.  
+Si osserva la presenza di due campi, \texttt{costo} e \texttt{importo}, sia nell'entità \textbf{Tariffa} che nell'entità \textbf{Pagamento}.
 Sebbene a primo impatto possa sembrare una \emph{ridondanza}, questa scelta risponde ad un'esigenza progettuale ben precisa.
 
 \medskip
-\begin{itemize}
-    \item la tabella \textbf{Tariffa} rappresenta un \emph{listino prezzi} soggetto a possibili variazioni nel tempo
-    \item l'attributo \texttt{importo} in \textbf{Pagamento} indica il prezzo \emph{effettivamente concordato} per uno specifico noleggio
-\end{itemize}
+infatti la tabella \textbf{Tariffa} rappresenta un \emph{listino prezzi} soggetto a possibili variazioni nel tempo, mentre l'attributo \texttt{importo} in \textbf{Pagamento} indica il prezzo \emph{effettivamente concordato} per uno specifico noleggio.
 
 \medskip
 Questa distinzione consente di mantenere l'\textbf{accuratezza temporale}: anche se il listino viene aggiornato, i pagamenti storici conservano l'importo originariamente applicato.
@@ -122,13 +201,23 @@ Questa distinzione consente di mantenere l'\textbf{accuratezza temporale}: anche
 \hrule
 \bigskip
 
-\noindent\textbf{Gestione delle biciclette elettriche}
+\noindent\textbf{Gestione delle biciclette elettriche}\label{sec:ridondanza_bici_elettriche}
 
 \medskip
 Nel primo schema emerge una criticità legata alla gestione delle bici elettriche. Come richiesto dalla specifica, per questa tipologia di biciclette è necessario tracciare lo \textbf{stato di carica della batteria} sia all'inizio che alla fine di ogni noleggio.
 
 \medskip
-La soluzione attualmente adottata comporta la presenza di \emph{valori nulli} per tutte le biciclette non elettriche, introducendo una ridondanza non necessaria.
+La soluzione attualmente adottata comporta la presenza di \emph{valori nulli} per tutte le biciclette non elettriche, introducendo una ridondanza. Sfortunatamente, la rimozione di questa ridondanza non è semplice, poiché richiederebbe la creazione di una \textbf{specializzazione} dell'entità \textbf{Bici} ed una relazione aggiuntiva con \textbf{Noleggio} come mostrato di seguito:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{assets/schema2.pdf}
+\end{figure}
+\medskip
+
+Tuttavia, in fase di traduzione verso il modello relazionale, la specializzazione verrebbe comunque rimossa con la strategia di accorpamento nell'entità padre, riportando la situazione alla condizione iniziale.
+\medskip
+Scelgo perciò di accettare la ridondanza attuale, avendo \emph{valori nulli} per ogni bicicletta non elettrica.
 
 \bigskip
 \hrule
@@ -137,7 +226,7 @@ La soluzione attualmente adottata comporta la presenza di \emph{valori nulli} pe
 \noindent\textbf{Scalabilità del tariffario}
 
 \medskip
-Un'ulteriore fonte di ridondanza riguarda il \textbf{tariffario}, che richiede una tupla per ogni combinazione di \texttt{durata} e \texttt{tipologia\_bici}, con complessità spaziale $O(m \times n)$. Sebbene la tabella \textbf{Tariffa} creasca raramente, l'approccio risulta poco scalabile.
+Un'ulteriore fonte di ridondanza riguarda il \textbf{tariffario}, che richiede una tupla per ogni combinazione di \texttt{durata} e \texttt{tipologia\_bici}, con complessità spaziale $O(m \times n)$. Sebbene la tabella \textbf{Tariffa} cresca raramente, l'approccio risulta poco scalabile.
 
 \bigskip
 \hrule
@@ -147,23 +236,118 @@ Di seguito si mostra lo schema E-R finale:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{assets/schema2.pdf}
-    \label{fig:schema2}
+    \includegraphics[width=1\textwidth]{assets/schema3.pdf}
 \end{figure}
 
+\subsubsection{Tabella dei volumi aggiornata}
+
+Si riporta di seguito la tabella dei volumi finale, prendendo come riferimento 1000 noleggi.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\ \hline
+Cliente           & E & 600 \\ \hline
+Bici              & E & 100 \\ \hline
+Tipologia Bici    & E & 3 \\ \hline
+Noleggio          & E & 1000 \\ \hline
+Pagamento         & E & 1000 \\ \hline
+Tariffa Base      & E & 3 \\ \hline
+sottoscrive       & R & 1000 \\ \hline
+utilizza          & R & 1000 \\ \hline
+applica           & R & 1000 \\ \hline
+genera            & R & 1000 \\ \hline
+appartiene        & R & 100 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Tabelle degli accessi aggiornate}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Reg. Cliente} & \textbf{Agg. Bici} & \textbf{Avvio Nol.[1]} & \textbf{Conc. Nol.[2]} \\ \hline
+Cliente                     & 0 & 0 & 0 & 0 \\ \hline
+Bici                        & 0 & 0 & 0 & 0 \\ \hline
+Tipologia Bici              & 0 & 0 & 1 & 0 \\ \hline
+Noleggio                    & 0 & 0 & 0 & 1 \\ \hline
+Pagamento                   & 0 & 0 & 0 & 0 \\ \hline
+Tariffa Base                & 0 & 0 & 1 & 0 \\ \hline
+sottoscrive                 & 0 & 0 & 0 & 0 \\ \hline
+utilizza                    & 0 & 0 & 0 & 0 \\ \hline
+applica                     & 0 & 0 & 0 & 0 \\ \hline
+genera                      & 0 & 0 & 0 & 0 \\ \hline
+appartiene                  & 0 & 0 & 1 & 0 \\ \hline
+\rowcolor{yellow!20} Tot L  & 0 & 0 & 3 & 1 \\ \hline
+\end{tabular}
+\caption{Tabella degli Accessi in Lettura}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Componente} & \textbf{Reg. Cliente} & \textbf{Agg. Bici} & \textbf{Avvio Nol.[1]} & \textbf{Conc. Nol.[2]} \\ \hline
+Cliente                     & 1 & 0 & 0 & 0 \\ \hline
+Bici                        & 0 & 1 & 0 & 0 \\ \hline
+Noleggio                    & 0 & 0 & 1 & 1 \\ \hline
+Pagamento                   & 0 & 0 & 0 & 1 \\ \hline
+Tipologia Bici              & 0 & 0 & 0 & 0 \\ \hline
+Tariffa Base                & 0 & 0 & 0 & 0 \\ \hline
+sottoscrive                 & 0 & 0 & 1 & 0 \\ \hline
+genera                      & 0 & 0 & 0 & 1 \\ \hline
+utilizza                    & 0 & 0 & 1 & 0 \\ \hline
+applica                     & 0 & 0 & 1 & 0 \\ \hline
+appartiene                  & 0 & 1 & 0 & 0 \\ \hline
+consuma                     & 0 & 0 & 0 & 0 \\ \hline
+\rowcolor{yellow!20} Tot S  & 1 & 2 & 4 & 3 \\ \hline
+\end{tabular}
+\caption{Tabella degli Accessi in Scrittura}
+\end{table}
+
+\smallskip
+\noindent\textit{[1] Nota: si ipotizza il noleggio di una bicicletta non elettrica}
+
+\noindent\textit{[2] Nota: si ipotizza che la nota di stato della bicicletta non venga cambiato}
+
+\medskip
+Le tabelle aggiornate non evidenziano variazioni significative nel numero di accessi, presentando anzi un lieve peggioramento. Tuttavia, la ristrutturazione apporta benefici in termini di \emph{efficienza spaziale}, portando ad una base di dati più scalabile e mantenibile.
+
 \subsubsection{Eliminazione delle generalizzazioni}
+
+Nello schema E-R finale non sono presenti generalizzazioni da eliminare (vedi sez. \ref{sec:ridondanza_bici_elettriche}).
+
 \subsubsection{Rimozione degli attributi composti}
+
+Nello schema E-R finale non sono presenti attributi composti da rimuovere.
+
 \subsubsection{Scelta degli identificatori principali}
-\subsubsection{Risultato finale della ristrutturazione}
+
+Nello schema E-R finale, gli identificatori principali sono stati scelti come segue:
+\begin{itemize}
+    \item \textbf{Cliente}: codice fiscale
+    \item \textbf{Bici}: codice telaio (eventualmente anche numero di serie GPS)
+    \item \textbf{Tipologia Bici}: nome
+    \item \textbf{Noleggio}: identificatore univoco generato automaticamente (UUID o seriale)
+    \item \textbf{Pagamento}: codice ricevuta
+    \item \textbf{Tariffa Base}: numero di giorni
+\end{itemize}
+
+Per l'entità Noleggio si è scelto di usare un id generato automaticamente perché una chiave composta naturale basata su 
+\texttt{data}, \texttt{codice\_fiscale} e \texttt{codice\_telaio} sarebbe poco pratica e difficile da gestire in caso di modifiche. L'id rende le relazioni più semplici e si adatta meglio al fatto che il noleggio è un'operazione di natura transazionale.
+
 \subsection{Traduzione verso il Modello Relazionale}
 
 \section{Progettazione Fisica}
+
 \subsection{Creazione e Popolamento Tabelle}
 \subsection{Triggers}
 \subsection{Interrogazioni}
 \subsection{Procedure e Funzioni}
-
-% aggiornamento tariffa con base * moltiplicatore
 
 \subsection{Viste}
 
