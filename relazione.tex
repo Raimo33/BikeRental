@@ -338,9 +338,41 @@ Nello schema E-R finale, gli identificatori principali sono stati scelti come se
 \end{itemize}
 
 Per l'entità Noleggio si è scelto di usare un id generato automaticamente perché una chiave composta naturale basata su 
-\texttt{data}, \texttt{codice\_fiscale} e \texttt{codice\_telaio} sarebbe poco pratica e difficile da gestire in caso di modifiche. L'id rende le relazioni più semplici e si adatta meglio al fatto che il noleggio è un'operazione di natura transazionale.
+\texttt{data}, \texttt{codice\_fiscale} e \texttt{codice\_telaio} sarebbe poco pratica.
 
 \subsection{Traduzione verso il Modello Relazionale}
+
+Di seguito viene mostrato lo schema relazionale risultante:
+
+\begin{itemize}
+    \item \textbf{Noleggio}(\underline{id}, data\_inizio, data\_fine, cliente, tariffa)
+    \begin{itemize}
+        \item Noleggio.cliente $\rightarrow$ Cliente.codice\_fiscale
+        \item Noleggio.tariffa $\rightarrow$ Tariffa\_Base.numero\_giorni
+    \end{itemize}
+
+    \item \textbf{Pagamento}(\underline{codice\_ricevuta}, modalita, importo, noleggio)
+    \begin{itemize}
+        \item Pagamento.noleggio $\rightarrow$ Noleggio.id
+    \end{itemize}
+
+    \item \textbf{Tariffa\_Base}(\underline{numero\_giorni}, prezzo)
+
+    \item \textbf{Cliente}(\underline{codice\_fiscale}, nome, cognome, cellulare)
+
+    \item \textbf{Bici}(\underline{codice\_telaio}, numero\_serie\_gps, taglia, genere, nota\_danni, stato, tipologia)
+    \begin{itemize}
+        \item Bici.tipologia $\rightarrow$ Tipologia\_Bici.nome
+    \end{itemize}
+
+    \item \textbf{Tipologia\_Bici}(\underline{nome}, moltiplicatore\_costo)
+
+    \item \textbf{Utilizza}(\underline{noleggio}, \underline{bici}, batteria\_inizio, batteria\_fine)
+    \begin{itemize}
+        \item Utilizza.noleggio $\rightarrow$ Noleggio.id
+        \item Utilizza.bici $\rightarrow$ Bici.codice\_telaio
+    \end{itemize}
+\end{itemize}
 
 \section{Progettazione Fisica}
 
