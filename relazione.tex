@@ -1,6 +1,5 @@
 \documentclass[12pt,a4paper]{article}
 
-\usepackage[utf8]{inputenc}
 \usepackage[main=italian,provide=*]{babel}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -356,15 +355,13 @@ Di seguito viene mostrato lo schema relazionale risultante:
         \item Pagamento.noleggio $\rightarrow$ Noleggio.id
     \end{itemize}
 
-    \item \textbf{Tariffa\_Base}(\underline{numero\_giorni}, prezzo)
-
-    \item \textbf{Cliente}(\underline{codice\_fiscale}, nome, cognome, cellulare)
-
     \item \textbf{Bici}(\underline{codice\_telaio}, numero\_serie\_gps, taglia, genere, nota\_danni, stato, tipologia)
     \begin{itemize}
         \item Bici.tipologia $\rightarrow$ Tipologia\_Bici.nome
     \end{itemize}
 
+    \item \textbf{Tariffa\_Base}(\underline{numero\_giorni}, prezzo)
+    \item \textbf{Cliente}(\underline{codice\_fiscale}, nome, cognome, cellulare)
     \item \textbf{Tipologia\_Bici}(\underline{nome}, moltiplicatore\_costo)
 
     \item \textbf{Utilizza}(\underline{noleggio}, \underline{bici}, batteria\_inizio, batteria\_fine)
@@ -372,15 +369,54 @@ Di seguito viene mostrato lo schema relazionale risultante:
         \item Utilizza.noleggio $\rightarrow$ Noleggio.id
         \item Utilizza.bici $\rightarrow$ Bici.codice\_telaio
     \end{itemize}
+
 \end{itemize}
 
 \section{Progettazione Fisica}
 
-\subsection{Creazione e Popolamento Tabelle}
+\subsection{Creazione Tabelle}
+
+Le tabelle create sono le seguenti: \textbf{Noleggio}, \textbf{Pagamento}, \textbf{Bici}, \textbf{Tariffa\_Base}, \textbf{Cliente}, \textbf{Tipologia\_Bici} e \textbf{Utilizza}.
+
+\medskip
+Ogni attributo è stato definito con il tipo di dato più appropriato tenendo in considerazione i casi d'uso e i vincoli di integrità.
+
+\medskip
+Inoltre sono stati aggiunti una serie di controlli per sanificare attributi come numero di telefono, prezzi, date, stati, ecc. così da prevenire errori umani ove possibile.
+
+\subsection{Popolamento Tabelle}
+
+Le tabelle sono state popolate con dati arbitrari il più realistici possibile, in modo da poter testare le funzionalità del database.
+
 \subsection{Triggers}
-\subsection{Interrogazioni}
-\subsection{Procedure e Funzioni}
+
+Sono stati ideati 4 triggers per una maggiore integrità dei dati:
+
+\begin{itemize}
+    \item \textbf{trg\_chk\_bici\_disponibile}: prima dell'inserimento di una tupla in \textbf{Utilizza}, verifica che la bici sia effettivamente disponibile.
+    \item \textbf{trg\_set\_bici\_in\_uso}: dopo l'inserimento di una tupla in \textbf{Utilizza}, aggiorna lo stato della bici a "in uso".
+    \item \textbf{trg\_set\_bici\_disponibile}: dopo l'inserimento di una tupla in \textbf{Pagamento}, aggiorna lo stato della bici a "disponibile".
+    \item \textbf{trg\_chk\_importo\_pagamento}: prima dell'inserimento di una tupla in \textbf{Pagamento}, verifica che l'importo rispecchi la tariffa applicata.
+\end{itemize}
 
 \subsection{Viste}
+
+Sono state ideate 3 viste per facilitare l'accesso a informazioni rilevanti:
+
+\begin{itemize}
+    \item \textbf{v\_noleggi\_attivi}: mostra tutti i noleggi attualmente in corso con data di fine prevista e cliente associato, mostrando i più urgenti per primi.
+    \item \textbf{v\_clienti\_frequenti}: elenca i clienti abituali, ordinati per numero di noleggi effettuati.
+    \item \textbf{v\_bici\_da\_caricare}: elenca le biciclette elettriche che necessitano di ricarica, mostrando prima le più scariche.
+\end{itemize}
+
+\subsection{Procedure e Funzioni}
+
+Sono state implementate procedure per automatizzare operazioni comuni:
+
+\begin{itemize}
+    \item \textbf{sp\_inizia\_noleggio}: avvia un nuovo noleggio per un cliente e una bici specifica, registrando in automatico la data di inizio e lo stato della bici.
+    \item \textbf{sp\_concludi\_noleggio}: conclude un noleggio, aggiornando la data di fine, lo stato della bici e registrando il pagamento.
+    \item \textbf{sp\_report\_incassi}: genera un report degli incassi totali prendendo in input un intervallo di date.
+\end{itemize}
 
 \end{document}

@@ -18,6 +18,7 @@ END $$
 CREATE PROCEDURE sp_concludi_noleggio(
   IN p_noleggio_id INT,
   IN p_codice_ricevuta CHAR(10),
+  IN p_importo DECIMAL(6,2),
   IN p_modalita ENUM('carta', 'contanti', 'bitcoin'),
   IN p_batteria_fine TINYINT,
   IN p_nuova_nota_danni VARCHAR(100)
@@ -26,20 +27,11 @@ BEGIN
   DECLARE v_importo_finale DECIMAL(6,2);
   DECLARE v_codice_telaio CHAR(10);
 
-  SELECT (tb.prezzo * tbi.moltiplicatore_costo), u.bici
-  INTO v_importo_finale, v_codice_telaio
-  FROM Noleggio n
-  INNER JOIN Utilizza u          ON n.id = u.noleggio
-  INNER JOIN Bici b              ON u.bici = b.codice_telaio
-  INNER JOIN Tipologia_Bici tbi  ON b.tipologia = tbi.nome
-  INNER JOIN Tariffa_Base tb     ON n.tariffa = tb.numero_giorni
-  WHERE n.id = p_noleggio_id;
-
   START TRANSACTION;
     UPDATE Noleggio SET data_fine = NOW() WHERE id = p_noleggio_id;
     UPDATE Utilizza SET batteria_fine = p_batteria_fine WHERE noleggio = p_noleggio_id;
     UPDATE Bici SET nota_danni = IFNULL(p_nuova_nota_danni, nota_danni) WHERE codice_telaio = v_codice_telaio;
-    INSERT INTO Pagamento (codice_ricevuta, modalita, importo, noleggio) VALUES (p_codice_ricevuta, p_modalita, v_importo_finale, p_noleggio_id);
+    INSERT INTO Pagamento (codice_ricevuta, modalita, importo, noleggio) VALUES (p_codice_ricevuta, p_modalita, p_importo, p_noleggio_id);
   COMMIT;
 END $$
 
