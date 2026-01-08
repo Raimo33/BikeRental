@@ -1,4 +1,4 @@
-all: relazione.pdf report.pdf
+all: relazione.pdf
 
 %.pdf: %.tex
 	mkdir -p build
